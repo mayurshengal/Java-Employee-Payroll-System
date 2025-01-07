@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,23 +89,79 @@ class PayrollSystem {
     }
 }
 
+
 public class Main {
     public static void main(String[] args) {
         PayrollSystem payrollSystem = new PayrollSystem();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
 
-        FullTimeEmployee emp1 = new FullTimeEmployee("John Doe", 101, 5000.0);
-        PartTimeEmployee emp2 = new PartTimeEmployee("Jane Smith", 102, 30, 15.0);
+        while (true) {
+            // Display menu options
+            System.out.println("\n--- Payroll System Menu ---");
+            System.out.println("1. Add Full-Time Employee");
+            System.out.println("2. Add Part-Time Employee");
+            System.out.println("3. Display All Employees");
+            System.out.println("4. Remove Employee by ID");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
 
-        payrollSystem.addEmployee(emp1);
-        payrollSystem.addEmployee(emp2);
+            switch (choice) {
+                case 1:
+                    // Add Full-Time Employee
+                    System.out.print("Enter Name: ");
+                    String fullTimeName = scanner.next();
+                    System.out.print("Enter ID: ");
+                    int fullTimeId = scanner.nextInt();
+                    System.out.print("Enter Salary: ");
+                    double salary = scanner.nextDouble();
 
-        System.out.println("Initial Employee Details:");
-        payrollSystem.displayEmployees();
+                    FullTimeEmployee fullTimeEmployee = new FullTimeEmployee(fullTimeName, fullTimeId, salary);
+                    payrollSystem.addEmployee(fullTimeEmployee);
+                    System.out.println("Full-Time Employee added successfully!");
+                    break;
 
-        System.out.println("\nRemoving Employee...");
-        payrollSystem.removeEmployee(101);
+                case 2:
+                    // Add Part-Time Employee
+                    System.out.print("Enter Name: ");
+                    String partTimeName = scanner.next();
+                    System.out.print("Enter ID: ");
+                    int partTimeId = scanner.nextInt();
+                    System.out.print("Enter Hours Worked: ");
+                    int hoursWorked = scanner.nextInt();
+                    System.out.print("Enter Hourly Rate: ");
+                    double hourlyRate = scanner.nextDouble();
 
-        System.out.println("\nRemaining Employee Details:");
-        payrollSystem.displayEmployees();
+                    PartTimeEmployee partTimeEmployee = new PartTimeEmployee(partTimeName, partTimeId, hoursWorked, hourlyRate);
+                    payrollSystem.addEmployee(partTimeEmployee);
+                    System.out.println("Part-Time Employee added successfully!");
+                    break;
+
+                case 3:
+                    // Display All Employees
+                    System.out.println("\nEmployee Details:");
+                    payrollSystem.displayEmployees();
+                    break;
+
+                case 4:
+                    // Remove Employee by ID
+                    System.out.print("Enter Employee ID to remove: ");
+                    int removeId = scanner.nextInt();
+                    payrollSystem.removeEmployee(removeId);
+                    System.out.println("Employee removed successfully (if existed).");
+                    break;
+
+                case 5:
+                    // Exit the program
+                    System.out.println("Exiting Payroll System. Goodbye!");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        }
     }
 }
